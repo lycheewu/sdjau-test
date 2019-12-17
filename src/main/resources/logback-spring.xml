@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <!-- Spring官方建议的配置文件命名方式是logback-spring.xml，而非logback.xml -->
+
+    <!-- ======================================== 变量定义 ======================================== -->
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
+    <!-- 这里引用了系统环境变量${user.home}，满足了服务器端与本地（linux/MacOSX）的统一 -->
+    <property name="LOG_HOME" value="${user.home}/logs/skywalker2"/>
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
+
+
+    <!-- ======================================== Appender定义 ======================================== -->
+    <!-- 控制台输出，用于本地开发 -->
+    <appender name="STDOUT_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 记录三方依赖输出的日志 -->
+    <appender name="FILE_APPENDER_DEFAULT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- <file>的作用是设置一个基础文件，如果是滚动日志，那么每次新产生的文件名称使用<file>定义的字符串如果达到分割条件，
+            该文件会被重命名为为<fileNamePattern>中的文件名，然后再产生一个新的文件，使用<file>来命名。这个配置也可以不设置，
+            logback会直接使用<fileNamePattern>中的配置来生成文件名。
+            建议配置<file>，且不带后缀，这样在排查问题的时候，很容易找到当前需要处理的日志文件。 -->
+        <file>
+            ${LOG_HOME}/default.log
+        </file>
+
+        <!-- 滚动策略：时间触发日志滚动，每天产生一个文件，最多保留一个月 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 非当天的日志文件，通过此参数单独命名，与<file>元素的区别是增加了时间 -->
+            <fileNamePattern>${LOG_HOME}/default.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- 日志文件保留天数 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <!-- 负责两件事，一是把日志信息转换成字节数组，二是把字节数组写入到输出流 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!-- 设置当前appender中日志输出的文本格式 -->
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 记录全局所有模块日志 -->
+    <appender name="FILE_APPENDER_APP" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>
+            ${LOG_HOME}/app.log
+        </file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/app.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- ======================================== Logger定义 ======================================== -->
+    <!-- logback与springboot整合后，可通过springboot的配置文件直接配置logger -->
+
+    <logger additivity="false" name="com.fwiot.skywalker2">
+        <appender-ref ref="STDOUT_APPENDER"/>
+        <appender-ref ref="FILE_APPENDER_APP"/>
+    </logger>
+
+    <logger additivity="false" name="org.springframework.data.mongodb.core.MongoTemplate">
+        <appender-ref ref="STDOUT_APPENDER"/>
+        <appender-ref ref="FILE_APPENDER_APP"/>
+    </logger>
+
+    <root>
+        <appender-ref ref="STDOUT_APPENDER"/>
+        <appender-ref ref="FILE_APPENDER_DEFAULT"/>
+    </root>
+</configuration>

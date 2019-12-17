@@ -1,0 +1,91 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+//本项目坐标配置
+group = 'org.apache.test'
+version = '1.0-SNAPSHOT'
+sourceCompatibility = '1.8'
+//targetCompatibility = 1.8
+
+// 定义安装插件所依赖的三方lib
+//buildscript {
+//    // 定义一个变量，声明使用的SpringBoot版本
+//    ext {
+//        springBootVersion = '2.1.6.RELEASE'
+//    }
+//
+//    repositories {
+//        mavenCentral()
+////        jcenter()
+//    }
+//
+//    dependencies {
+//        // 为下一步应用插件，声明插件的依赖
+//        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+//    }
+//}
+
+//configurations {
+//    compileOnly {
+//        extendsFrom annotationProcessor
+//    }
+//}
+
+//jar {
+//    baseName = 'test'
+//    version = '1.0-SNAPSHOT'
+//}
+
+repositories {
+    mavenCentral()
+}
+// 三方依赖仓库配置
+
+//repositories {
+//    maven {
+//        name 'aliyunmaven'
+//        url 'http://maven.aliyun.com/nexus/content/groups/public/'
+//    }
+//    mavenCentral()
+//}
+
+dependencies {
+    // SpringBoot相关依赖。注由于使用了“io.spring.dependency-management”插件，故下方依赖均可省略版本号
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    runtime('mysql:mysql-connector-java')
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis'
+//    compile group: 'org.springframework.session', name: 'spring-session-data-redis'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+
+    // 日志
+    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile 'ch.qos.logback:logback-core:1.2.3'
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+
+    // 基础工具
+    compile group: 'com.google.guava', name: 'guava', version: '27.0.1-jre'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.56'
+    compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
+    compile group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '1.2.10'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+    compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.6'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.3'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+
+}
+//dependencies {
+//    testCompile group: 'junit', name: 'junit', version: '4.12'
+//}
