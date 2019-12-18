@@ -11,7 +11,8 @@ spring:
   datasource:
     username = root
     password = 1234567
-    url = jdbc:mysql://106.54.134.159:3306/test1?authSource=admin
+    driver-class-name = com.mysql.cj.jdbc.Driver
+    url = jdbc:mysql://106.54.134.159:3306/test?authSource=admin
 #    device:
 #      uri: "mongodb://root:root@101.132.156.30:27017/db_device2?authSource=admin"
 #    project:

@@ -1,14 +1,14 @@
 ---
 # 公共配置文件
 
-variables:
-  # session过期时间，单位：毫秒
-  session-timeout:
-    # pcweb端：8小时
-    pcweb: 28800000
-    # app端：30天
-    app: 2592000000
-  redis-namespace: "sdjzu:test"
+#variables:
+#  # session过期时间，单位：毫秒
+#  session-timeout:
+#    # pcweb端：8小时
+#    pcweb: 28800000
+#    # app端：30天
+#    app: 2592000000
+#  redis-namespace: "sdjzu:test"
 
 # 系统配置
 server:

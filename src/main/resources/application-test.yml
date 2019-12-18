@@ -1,17 +1,18 @@
 ---
 # redis
 spring:
-#  redis:
-#    database: 0
-#    host: 101.132.156.30
-#    port: 6379
-#    password: zL3kv59nv]st73Mm
+  #  redis:
+  #    database: 0
+  #    host: 101.132.156.30
+  #    port: 6379
+  #    password: zL3kv59nv]st73Mm
 
   # MySQL数据源配置
   datasource:
     username:root
     password:1234567
-    uri:jdbc:mysql://106.54.134.159:3306/test1?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name = com.mysql.cj.jdbc.Driver
+    uri:jdbc:mysql://106.54.134.159:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
 #    customer:
 #      uri: "mongodb://root:root@101.132.156.30:27017/db_customer?authSource=admin"
 #    device:
@@ -21,9 +22,9 @@ spring:
 
 
 # 日志配置
-logging:
-  level:
-    root: INFO
-    com.fwiot.skywalker: DEBUG
-    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+#logging:
+#  level:
+#    root: INFO
+#    com.fwiot.skywalker: DEBUG
+#    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
 
